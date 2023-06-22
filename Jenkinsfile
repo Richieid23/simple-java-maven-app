@@ -16,5 +16,16 @@ pipeline {
                 sh 'mvn test'
             }
         }
+        stage('Manual Approval') {
+            steps {
+                input message: 'Lanjutkan ke tahap Deploy? klik Proceed (melanjutkan eksekusi pipeline ke tahap Deploy) atau Abort (menghentikan eksekusi pipeline)'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh './jenkins/scripts/deliver.sh'
+                sh 'sleep 1m'
+            }
+        }
     }
 }
